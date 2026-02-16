@@ -19,8 +19,8 @@ public abstract class Leaf implements TextComponent {
     }
 
     @Override
-    public abstract void print(TextComponent textComponent);
+    public abstract void buildTextHierarchy(TextComponent textComponent);
 
     @Override
-    public abstract String toString(TextComponent textComponent);
+    public abstract String toString();
 }

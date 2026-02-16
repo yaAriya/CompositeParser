@@ -4,8 +4,9 @@ package component;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Composite implements TextComponent{
+public abstract class Composite implements TextComponent {
     List<TextComponent> children = new ArrayList<>();
+
     @Override
     public void add(TextComponent component) {
         children.add(component);
@@ -22,8 +23,7 @@ public abstract class Composite implements TextComponent{
     }
 
     @Override
-    public abstract void print(TextComponent component);
+    public abstract String toString();
 
-    @Override
-    public abstract String toString(TextComponent component);
+    public abstract void print();
 }

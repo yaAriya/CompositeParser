@@ -1,9 +1,17 @@
 package parser;
 
-import component.TextComponent;
-
 import java.util.List;
 
 public interface Parser {
-    List<TextComponent> parseObject(TextComponent component);
+    List<String> parseText(String text);
+
+    List<String> parseParagraph(String paragraph);
+
+    List<String> parseSentence(String sentence);
+
+    List<String> parseWhiteSpaceIntoWords(String whiteSpace);
+
+    List<Character> parseWhiteSpaceIntoPunctuations(String whiteSpace);
+
+    List<Character> parseWord(String word);
 }

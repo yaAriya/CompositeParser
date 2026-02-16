@@ -1,26 +1,17 @@
 package invoker;
 
-import parser.ParagraphParser;
-
-import java.util.Scanner;
+import component.Text;
+import component.TextComponent;
+import reader.ConsoleReader;
 
 public class Main {
     static void main() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter text for start working");
+        ConsoleReader reader = new ConsoleReader();
+        TextComponent text = new Text();
 
-        StringBuilder fullText = new StringBuilder();
+        //TextComponent textFromConsole = new Text(reader.readObjectFromConsole());
+        text.buildTextHierarchy(reader.readObjectFromConsole());
 
-        while(scanner.hasNext()) {
-            String line = scanner.nextLine();
-            fullText.append(line);
-            if(line.equals("END")){
-                scanner.close();
-            }
-        }
-
-        ParagraphParser paragraphParser = new ParagraphParser();
-        //paragraphParser.parseObject(fullText);
 
     }
 }
