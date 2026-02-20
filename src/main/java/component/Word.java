@@ -6,19 +6,20 @@ import parser.ParserImpl;
 import java.util.List;
 
 public class Word extends Composite {
-    List<TextComponent> children;
+    WhiteSpace whiteSpace;
     String value;
 
     public Word(){}
 
     public Word(String value){
+        super();
         this.value = value;
     }
 
     @Override
     public void buildTextHierarchy(TextComponent textComponent) {
+        whiteSpace = new WhiteSpace();
         Parser parser = new ParserImpl();
-        WhiteSpace whiteSpace = new WhiteSpace();
         Letter letter = new Letter();
 
         String stringWhiteSpace = textComponent.toString();
@@ -39,6 +40,6 @@ public class Word extends Composite {
 
     @Override
     public String toString() {
-        return "";
+        return value;
     }
 }

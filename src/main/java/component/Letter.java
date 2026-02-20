@@ -6,19 +6,21 @@ import parser.ParserImpl;
 import java.util.List;
 
 public class Letter extends Leaf {
+    Word word;
     Character value;
 
     public Letter() {
     }
 
     public Letter(Character value) {
+        super();
         this.value = value;
     }
 
     @Override
     public void buildTextHierarchy(TextComponent textComponent) {
+        word = new Word();
         Parser parser = new ParserImpl();
-        Word word = new Word();
 
         String stringWord = textComponent.toString();
         List<Character> letters = parser.parseWord(stringWord);
@@ -31,6 +33,6 @@ public class Letter extends Leaf {
 
     @Override
     public String toString() {
-        return "";
+        return String.valueOf(value);
     }
 }

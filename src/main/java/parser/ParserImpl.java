@@ -14,7 +14,7 @@ public class ParserImpl implements Parser {
     @Override
     public List<String> parseParagraph(String paragraph) {
         String[] sentences = paragraph.split("[.!?]");
-        return  Arrays.asList(sentences);
+        return Arrays.asList(sentences);
     }
 
     @Override
@@ -25,11 +25,11 @@ public class ParserImpl implements Parser {
 
     @Override
     public List<String> parseWhiteSpaceIntoWords(String whiteSpace) {
-        List<String> words =  new ArrayList<>();
+        List<String> words = new ArrayList<>();
         String[] notFilteredWords = whiteSpace.split("[^a-zA-Z]+");
 
-        for(String word: notFilteredWords){
-            if(!word.isEmpty()){
+        for (String word : notFilteredWords) {
+            if (!word.isEmpty()) {
                 words.add(word);
             }
         }
@@ -41,10 +41,12 @@ public class ParserImpl implements Parser {
         List<Character> punctuation = new ArrayList<>();
         String[] notFilteredPunctuation = whiteSpace.split("\\P{Punct}");
 
-        for(String string: notFilteredPunctuation){
-            if(!string.isEmpty()){
-                char mark = string.charAt(0);
-                punctuation.add(mark);
+        for (String string : notFilteredPunctuation) {
+            if (!string.isEmpty()) {
+                char[] marks = string.toCharArray();
+                for (char mark : marks) {
+                    punctuation.add(mark);
+                }
             }
         }
         return punctuation;
@@ -54,7 +56,7 @@ public class ParserImpl implements Parser {
     public List<Character> parseWord(String word) {
         List<Character> letters = new ArrayList<>();
 
-        for(char letter: word.toCharArray()){
+        for (char letter : word.toCharArray()) {
             letters.add(letter);
         }
         return letters;

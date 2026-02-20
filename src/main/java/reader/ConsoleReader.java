@@ -10,12 +10,16 @@ public class ConsoleReader {
             StringBuilder fullText = new StringBuilder();
 
             while (scanner.hasNext()) {
-                String word = scanner.next();
-                fullText.append(word);
-                fullText.append(" ");
-                if (word.equals("END")) {
-                    scanner.close();
+                String line = scanner.nextLine();
+                int endIndex = line.indexOf("END");
+
+                if (endIndex != -1) {
+                    fullText.append(line, 0, endIndex);
+                    fullText.append("\n");
                     break;
+                } else {
+                    fullText.append(line);
+                    fullText.append("\n");
                 }
             }
             return fullText.toString();

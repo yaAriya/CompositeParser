@@ -2,7 +2,7 @@ package component;
 
 import exceptions.ComponentException;
 
-public abstract class Leaf implements TextComponent {
+public abstract class Leaf implements TextComponent{
     @Override
     public TextComponent getChild(int i) throws ComponentException {
         throw new ComponentException("Leaf cannot have child");

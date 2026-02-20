@@ -6,20 +6,21 @@ import parser.ParserImpl;
 import java.util.List;
 
 public class Punctuation extends Leaf {
+    WhiteSpace whiteSpace;
     Character value;
 
     public Punctuation() {
     }
 
     public Punctuation(Character value) {
+        super();
         this.value = value;
     }
 
-
     @Override
     public void buildTextHierarchy(TextComponent textComponent) {
+        whiteSpace = new WhiteSpace();
         Parser parser = new ParserImpl();
-        WhiteSpace whiteSpace = new WhiteSpace();
 
         String stringWhiteSpace = textComponent.toString();
         List<Character> punctuations = parser.parseWhiteSpaceIntoPunctuations(stringWhiteSpace);
@@ -32,6 +33,6 @@ public class Punctuation extends Leaf {
 
     @Override
     public String toString() {
-        return "";
+        return String.valueOf(value);
     }
 }

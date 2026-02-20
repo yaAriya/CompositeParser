@@ -3,23 +3,24 @@ package component;
 import parser.Parser;
 import parser.ParserImpl;
 
+import java.awt.*;
 import java.util.List;
 
-public class Sentence extends Composite {
-    List<TextComponent> children;
+public class Sentence extends Composite{
+    Paragraph paragraph;
     String value;
 
     public Sentence(){}
 
     public Sentence(String value){
+        super();
         this.value = value;
     }
 
-    @Override
     public void buildTextHierarchy(TextComponent textComponent) {
+        paragraph = new Paragraph();
         Parser parser = new ParserImpl();
-        Paragraph paragraph = new Paragraph();
-        WhiteSpace whiteSpace = new WhiteSpace();
+         WhiteSpace whiteSpace = new WhiteSpace();
 
         String stringParagraph = textComponent.toString();
         List<String> stringSentences = parser.parseParagraph(stringParagraph);
@@ -36,12 +37,10 @@ public class Sentence extends Composite {
         WhiteSpace whiteSpace = new WhiteSpace();
         System.out.println("WhiteSpace count: " + children.size());
         whiteSpace.print();
-
     }
 
     @Override
     public String toString() {
-        return "";
+        return value;
     }
-
 }

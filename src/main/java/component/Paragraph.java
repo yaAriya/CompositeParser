@@ -5,21 +5,21 @@ import parser.ParserImpl;
 
 import java.util.List;
 
-public class Paragraph extends Composite {
-    List<TextComponent> children;
+public class Paragraph extends Composite{
+    Text text;
     String value;
 
     public Paragraph() {
     }
 
     public Paragraph(String value) {
+        super();
         this.value = value;
     }
 
-    @Override
     public void buildTextHierarchy(TextComponent textComponent) {
         Parser parser = new ParserImpl();
-        Text text = new Text();
+        text = new Text();
         Sentence sentence = new Sentence();
 
         String stringText = textComponent.toString();
@@ -34,14 +34,15 @@ public class Paragraph extends Composite {
 
     @Override
     public void print() {
+        Paragraph paragraph = new Paragraph();
         Sentence sentence = new Sentence();
-        System.out.println("Sentences count: " + children.size());
+        System.out.println("Sentences count: " + paragraph.children.size());
         sentence.print();
     }
 
-
     @Override
     public String toString() {
-        return "";
+        return value;
     }
 }
+

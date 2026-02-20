@@ -1,11 +1,10 @@
 package component;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Composite implements TextComponent {
-    List<TextComponent> children = new ArrayList<>();
+    protected List<TextComponent> children = new ArrayList<>();
 
     @Override
     public void add(TextComponent component) {

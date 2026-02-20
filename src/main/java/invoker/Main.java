@@ -1,16 +1,17 @@
 package invoker;
 
 import component.Text;
-import component.TextComponent;
 import reader.ConsoleReader;
 
 public class Main {
-    static void main() {
-        ConsoleReader reader = new ConsoleReader();
-        TextComponent text = new Text();
+    static Text textFromConsole;
+    static ConsoleReader reader = new ConsoleReader();
+    static Text text = new Text();
 
-        //TextComponent textFromConsole = new Text(reader.readObjectFromConsole());
-        text.buildTextHierarchy(reader.readObjectFromConsole());
+    static void main() {
+
+        textFromConsole = new Text(reader.readObjectFromConsole());
+        text.buildTextHierarchy(textFromConsole);
 
 
     }

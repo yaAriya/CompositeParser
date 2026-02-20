@@ -1,29 +1,35 @@
 package component;
 
-import java.util.List;
-
 public class Text extends Composite {
     TextComponent textComponent;
-    List<TextComponent> children;
+    Paragraph paragraph;
+    String value;
 
+    public Text(){
+    }
+
+    public Text(String value){
+        this.value = value;
+    }
 
     @Override
     public void buildTextHierarchy(TextComponent textComponent) {
-        Paragraph paragraph = new Paragraph();
+        this.textComponent = textComponent;
+        paragraph = new Paragraph();
         paragraph.buildTextHierarchy(textComponent);
         print();
     }
 
     @Override
     public void print() {
-        Paragraph paragraph = new Paragraph();
-        System.out.println("Your text" + textComponent);
+        paragraph = new Paragraph();
+        System.out.println("Your text" + "\n" + textComponent.toString());
         System.out.println("Paragraph count: " + children.size());
         paragraph.print();
     }
 
     @Override
     public String toString() {
-        return "";
+       return value;
     }
 }
