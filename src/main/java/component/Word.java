@@ -1,41 +1,52 @@
 package component;
 
+import exceptions.ComponentException;
 import parser.Parser;
 import parser.ParserImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Word extends Composite {
+    static List<List<TextComponent>> letters = new ArrayList<>();
     WhiteSpace whiteSpace;
+    Letter letter;
+    Parser parser;
     String value;
 
-    public Word(){}
+    public Word() {
+    }
 
-    public Word(String value){
+    public Word(String value) {
         super();
         this.value = value;
     }
 
     @Override
-    public void buildTextHierarchy(TextComponent textComponent) {
+    public void buildTextHierarchy(TextComponent textComponent) throws ComponentException {
         whiteSpace = new WhiteSpace();
-        Parser parser = new ParserImpl();
-        Letter letter = new Letter();
+        parser = new ParserImpl();
+        letter = new Letter();
 
         String stringWhiteSpace = textComponent.toString();
-        List<String> words = parser.parseWhiteSpaceIntoWords(stringWhiteSpace);
+        List<String> stringWords = parser.parseWhiteSpaceIntoWords(stringWhiteSpace);
 
-        for (String textWord : words) {
+        for (String textWord : stringWords) {
             Word word = new Word(textWord);
-            whiteSpace.add(word);
 
             letter.buildTextHierarchy(word);
+            letters.add(word.children);
+            textComponent.add(word);
         }
     }
 
     @Override
-    public void print() {
-        System.out.println("Letters count: " + children.size());
+    public void printCount() {
+        List<TextComponent> allLetters = letters.stream()
+                .flatMap(list -> list.stream())
+                .toList();
+
+        System.out.println("Letters count: " + allLetters.size());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package component;
 
+import exceptions.ComponentException;
 import parser.Parser;
 import parser.ParserImpl;
 
@@ -7,7 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WhiteSpace extends Composite {
+    static List<List<TextComponent>> wordsAndMarks = new ArrayList<>();
     Sentence sentence;
+    WhiteSpace whiteSpace;
+    Word word;
+    Punctuation punctuation;
+    Parser parser;
     String value;
 
     public WhiteSpace() {
@@ -18,42 +24,43 @@ public class WhiteSpace extends Composite {
         this.value = value;
     }
 
-    public void buildTextHierarchy(TextComponent textComponent) {
+    public void buildTextHierarchy(TextComponent textComponent) throws ComponentException {
         sentence = new Sentence();
-        Parser parser = new ParserImpl();
-        Word word = new Word();
-        Punctuation punctuation = new Punctuation();
+        whiteSpace = new WhiteSpace();
+        word = new Word();
+        punctuation = new Punctuation();
+        parser = new ParserImpl();
 
         String stringSentence = textComponent.toString();
         List<String> stringWhiteSpaces = parser.parseSentence(stringSentence);
 
         for (String textWhiteSpace : stringWhiteSpaces) {
             WhiteSpace whiteSpace = new WhiteSpace(textWhiteSpace);
-            sentence.add(whiteSpace);
 
             word.buildTextHierarchy(whiteSpace);
             punctuation.buildTextHierarchy(whiteSpace);
+
+            wordsAndMarks.add(whiteSpace.children);
+            textComponent.add(whiteSpace);
         }
     }
 
     @Override
-    public void print() {
-        List<Punctuation> marks = new ArrayList<>();
-        List<Word> words = new ArrayList<>();
-        Word word = new Word();
+    public void printCount() {
+        List<TextComponent> marks = wordsAndMarks.stream()
+                .flatMap(list -> list.stream())
+                .filter(element -> element instanceof Punctuation)
+                .toList();
 
-        for (TextComponent component : children) {
-            if (component instanceof Word) {
-                words.add((Word) component);
-            } else if (component instanceof Punctuation) {
-                marks.add((Punctuation) component);
-            }
-        }
+        List<TextComponent> words = wordsAndMarks.stream()
+                .flatMap(list -> list.stream())
+                .filter(element -> element instanceof Word)
+                .toList();
 
         System.out.println("Words count: " + words.size());
         System.out.println("Marks count: " + marks.size());
 
-         word.print();
+        word.printCount();
     }
 
     @Override

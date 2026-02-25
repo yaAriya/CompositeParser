@@ -13,7 +13,7 @@ public class ParserImpl implements Parser {
 
     @Override
     public List<String> parseParagraph(String paragraph) {
-        String[] sentences = paragraph.split("[.!?]");
+        String[] sentences = paragraph.split("(?<=[.!?])\\s+");
         return Arrays.asList(sentences);
     }
 

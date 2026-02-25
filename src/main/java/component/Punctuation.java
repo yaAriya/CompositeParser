@@ -1,5 +1,6 @@
 package component;
 
+import exceptions.ComponentException;
 import parser.Parser;
 import parser.ParserImpl;
 
@@ -7,6 +8,7 @@ import java.util.List;
 
 public class Punctuation extends Leaf {
     WhiteSpace whiteSpace;
+    Parser parser;
     Character value;
 
     public Punctuation() {
@@ -18,16 +20,16 @@ public class Punctuation extends Leaf {
     }
 
     @Override
-    public void buildTextHierarchy(TextComponent textComponent) {
+    public void buildTextHierarchy(TextComponent textComponent) throws ComponentException {
         whiteSpace = new WhiteSpace();
-        Parser parser = new ParserImpl();
+        parser = new ParserImpl();
 
         String stringWhiteSpace = textComponent.toString();
         List<Character> punctuations = parser.parseWhiteSpaceIntoPunctuations(stringWhiteSpace);
 
         for (Character mark : punctuations) {
             Punctuation punctuation = new Punctuation(mark);
-            whiteSpace.add(punctuation);
+            textComponent.add(punctuation);
         }
     }
 

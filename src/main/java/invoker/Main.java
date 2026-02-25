@@ -1,6 +1,7 @@
 package invoker;
 
 import component.Text;
+import exceptions.ComponentException;
 import reader.ConsoleReader;
 
 public class Main {
@@ -8,11 +9,9 @@ public class Main {
     static ConsoleReader reader = new ConsoleReader();
     static Text text = new Text();
 
-    static void main() {
+    static void main() throws ComponentException {
 
         textFromConsole = new Text(reader.readObjectFromConsole());
         text.buildTextHierarchy(textFromConsole);
-
-
     }
 }
