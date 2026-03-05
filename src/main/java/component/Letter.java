@@ -4,28 +4,24 @@ import exceptions.ComponentException;
 import parser.Parser;
 import parser.ParserImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Letter extends Leaf {
-    Word word;
-    Parser parser;
     Character value;
 
     public Letter() {
     }
 
     public Letter(Character value) {
-        super();
         this.value = value;
     }
 
     @Override
-    public void buildTextHierarchy(TextComponent textComponent) throws ComponentException {
-        word = new Word();
-        parser = new ParserImpl();
+    public void buildTextHierarchy(TextComponent textComponent, String textToParse) throws ComponentException {
+        Parser parser = new ParserImpl();
 
-        String stringWord = textComponent.toString();
-        List<Character> letters = parser.parseWord(stringWord);
+        List<Character> letters = parser.parseWord(textToParse);
 
         for (Character textLetter : letters) {
             Letter letter = new Letter(textLetter);
@@ -34,7 +30,19 @@ public class Letter extends Leaf {
     }
 
     @Override
-    public String toString() {
+    public List<TextComponent> countHowMany() {
+        List<TextComponent> letters = new ArrayList<>();
+
+        letters.add(this);
+        return letters;
+    }
+
+    public String getValue() {
         return String.valueOf(value);
+    }
+
+    @Override
+    public String toString() {
+        return getValue();
     }
 }

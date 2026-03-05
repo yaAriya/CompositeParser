@@ -9,7 +9,7 @@ public abstract class Composite implements TextComponent {
     protected List<TextComponent> children = new ArrayList<>();
 
     @Override
-    public abstract void buildTextHierarchy(TextComponent textComponent) throws ComponentException;
+    public abstract void buildTextHierarchy(TextComponent textComponent, String textToParse) throws ComponentException;
 
     @Override
     public void add(TextComponent component) {
@@ -22,11 +22,18 @@ public abstract class Composite implements TextComponent {
     }
 
     @Override
-    public abstract String toString();
+    public abstract List<TextComponent> countHowMany();
 
+    @Override
     public TextComponent getChild(int i) {
         return children.get(i);
     }
 
-    public abstract void printCount();
+    @Override
+    public List<TextComponent> getChildren() {
+        return children;
+    }
+
+    @Override
+    public abstract String toString();
 }

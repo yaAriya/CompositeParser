@@ -8,49 +8,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sentence extends Composite {
-    List<List<TextComponent>> whiteSpaces = new ArrayList<>();
-    Paragraph paragraph;
-    Sentence sentence;
-    WhiteSpace whiteSpace;
-    Parser parser;
-    String value;
+    public void buildTextHierarchy(TextComponent textComponent, String textToParse) throws ComponentException {
+        Parser parser = new ParserImpl();
+        WhiteSpace whiteSpace = new WhiteSpace();
 
-    public Sentence() {
-    }
-
-    public Sentence(String value) {
-        super();
-        this.value = value;
-    }
-
-    public void buildTextHierarchy(TextComponent textComponent) throws ComponentException {
-        paragraph = new Paragraph();
-        sentence = new Sentence();
-        parser = new ParserImpl();
-        whiteSpace = new WhiteSpace();
-
-        String stringParagraph = textComponent.toString();
-        List<String> stringSentences = parser.parseParagraph(stringParagraph);
+        List<String> stringSentences = parser.parseParagraph(textToParse);
         for (String textSentence : stringSentences) {
-            Sentence sentence = new Sentence(textSentence);
+            Sentence sentence = new Sentence();
 
-            whiteSpace.buildTextHierarchy(sentence);
-            whiteSpaces.add(sentence.children);
+            whiteSpace.buildTextHierarchy(sentence, textSentence);
             textComponent.add(sentence);
         }
     }
 
     @Override
-    public void printCount() {
-        List<TextComponent> allWhiteSpaces = whiteSpaces.stream()
-                .flatMap(list -> list.stream())
-                .toList();
-        System.out.println("WhiteSpace count: " + allWhiteSpaces.size());
-        whiteSpace.printCount();
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (TextComponent whiteSpaces : getChildren()) {
+            stringBuilder.append(whiteSpaces.toString());
+            stringBuilder.append(" ");
+        }
+        return stringBuilder.toString();
     }
 
     @Override
-    public String toString() {
-        return value;
+    public List<TextComponent> countHowMany() {
+        List<TextComponent> result = new ArrayList<>();
+
+        result.add(this);
+        for (TextComponent whiteSpace : getChildren()) {
+            result.addAll(whiteSpace.countHowMany());
+        }
+
+        return result;
     }
 }

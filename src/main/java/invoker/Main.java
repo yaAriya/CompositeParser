@@ -2,16 +2,17 @@ package invoker;
 
 import component.Text;
 import exceptions.ComponentException;
+import printer.Printer;
 import reader.ConsoleReader;
 
 public class Main {
-    static Text textFromConsole;
-    static ConsoleReader reader = new ConsoleReader();
-    static Text text = new Text();
-
     static void main() throws ComponentException {
+        ConsoleReader reader = new ConsoleReader();
+        Printer printer = new Printer();
+        Text text = new Text();
 
-        textFromConsole = new Text(reader.readObjectFromConsole());
-        text.buildTextHierarchy(textFromConsole);
+        text.buildTextHierarchy(text, reader.readObjectFromConsole());
+        text.printHowMany();
+        printer.printText(text.toString());
     }
 }

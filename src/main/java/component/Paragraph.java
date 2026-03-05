@@ -8,48 +8,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Paragraph extends Composite {
-    static List<List<TextComponent>> sentences = new ArrayList<>();
-    Paragraph paragraph;
-    Sentence sentence;
-    Parser parser;
-    String value;
+    public void buildTextHierarchy(TextComponent textComponent, String textToParse) throws ComponentException {
+        Parser parser = new ParserImpl();
+        Sentence sentence = new Sentence();
 
-    public Paragraph() {
-    }
-
-    public Paragraph(String value) {
-        super();
-        this.value = value;
-    }
-
-    public void buildTextHierarchy(TextComponent textComponent) throws ComponentException {
-        paragraph = new Paragraph();
-        parser = new ParserImpl();
-        sentence = new Sentence();
-
-        String stringText = textComponent.toString();
-        List<String> stringParagraphs = parser.parseText(stringText);
+        List<String> stringParagraphs = parser.parseText(textToParse);
         for (String textParagraph : stringParagraphs) {
-            Paragraph paragraph = new Paragraph(textParagraph);
+            Paragraph paragraph = new Paragraph();
 
-            sentence.buildTextHierarchy(paragraph);
-            sentences.add(paragraph.children);
+            sentence.buildTextHierarchy(paragraph, textParagraph);
             textComponent.add(paragraph);
         }
     }
 
     @Override
-    public void printCount() {
-        List<TextComponent> allSentences = sentences.stream()
-                .flatMap(list -> list.stream())
-                .toList();
-        System.out.println("Sentences count: " + allSentences.size());
-        sentence.printCount();
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (TextComponent sentence : getChildren()) {
+            stringBuilder.append(sentence.toString());
+            stringBuilder.append(" ");
+        }
+        return stringBuilder.toString();
     }
 
     @Override
-    public String toString() {
-        return value;
+    public List<TextComponent> countHowMany() {
+        List<TextComponent> result = new ArrayList<>();
+
+        result.add(this);
+        for (TextComponent sentence : getChildren()) {
+            result.addAll(sentence.countHowMany());
+        }
+        return result;
     }
 }
 

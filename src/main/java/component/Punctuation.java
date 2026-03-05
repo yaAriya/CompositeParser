@@ -4,11 +4,10 @@ import exceptions.ComponentException;
 import parser.Parser;
 import parser.ParserImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Punctuation extends Leaf {
-    WhiteSpace whiteSpace;
-    Parser parser;
     Character value;
 
     public Punctuation() {
@@ -20,12 +19,10 @@ public class Punctuation extends Leaf {
     }
 
     @Override
-    public void buildTextHierarchy(TextComponent textComponent) throws ComponentException {
-        whiteSpace = new WhiteSpace();
-        parser = new ParserImpl();
+    public void buildTextHierarchy(TextComponent textComponent, String textToParse) throws ComponentException {
+        Parser parser = new ParserImpl();
 
-        String stringWhiteSpace = textComponent.toString();
-        List<Character> punctuations = parser.parseWhiteSpaceIntoPunctuations(stringWhiteSpace);
+        List<Character> punctuations = parser.parseWhiteSpaceIntoPunctuations(textToParse);
 
         for (Character mark : punctuations) {
             Punctuation punctuation = new Punctuation(mark);
@@ -34,7 +31,19 @@ public class Punctuation extends Leaf {
     }
 
     @Override
-    public String toString() {
+    public List<TextComponent> countHowMany() {
+        List<TextComponent> marks = new ArrayList<>();
+
+        marks.add(this);
+        return marks;
+    }
+
+    public String getValue() {
         return String.valueOf(value);
+    }
+
+    @Override
+    public String toString() {
+        return getValue();
     }
 }

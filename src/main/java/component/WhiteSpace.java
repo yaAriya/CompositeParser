@@ -8,63 +8,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WhiteSpace extends Composite {
-    static List<List<TextComponent>> wordsAndMarks = new ArrayList<>();
-    Sentence sentence;
-    WhiteSpace whiteSpace;
-    Word word;
-    Punctuation punctuation;
-    Parser parser;
-    String value;
+    public void buildTextHierarchy(TextComponent textComponent, String textToParse) throws ComponentException {
+        Word word = new Word();
+        Punctuation punctuation = new Punctuation();
+        Parser parser = new ParserImpl();
 
-    public WhiteSpace() {
-    }
-
-    public WhiteSpace(String value) {
-        super();
-        this.value = value;
-    }
-
-    public void buildTextHierarchy(TextComponent textComponent) throws ComponentException {
-        sentence = new Sentence();
-        whiteSpace = new WhiteSpace();
-        word = new Word();
-        punctuation = new Punctuation();
-        parser = new ParserImpl();
-
-        String stringSentence = textComponent.toString();
-        List<String> stringWhiteSpaces = parser.parseSentence(stringSentence);
-
+        List<String> stringWhiteSpaces = parser.parseSentence(textToParse);
         for (String textWhiteSpace : stringWhiteSpaces) {
-            WhiteSpace whiteSpace = new WhiteSpace(textWhiteSpace);
+            WhiteSpace whiteSpace = new WhiteSpace();
 
-            word.buildTextHierarchy(whiteSpace);
-            punctuation.buildTextHierarchy(whiteSpace);
+            word.buildTextHierarchy(whiteSpace, textWhiteSpace);
+            punctuation.buildTextHierarchy(whiteSpace, textWhiteSpace);
 
-            wordsAndMarks.add(whiteSpace.children);
             textComponent.add(whiteSpace);
         }
     }
 
     @Override
-    public void printCount() {
-        List<TextComponent> marks = wordsAndMarks.stream()
-                .flatMap(list -> list.stream())
-                .filter(element -> element instanceof Punctuation)
-                .toList();
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
 
-        List<TextComponent> words = wordsAndMarks.stream()
-                .flatMap(list -> list.stream())
-                .filter(element -> element instanceof Word)
-                .toList();
-
-        System.out.println("Words count: " + words.size());
-        System.out.println("Marks count: " + marks.size());
-
-        word.printCount();
+        for (TextComponent child : getChildren()) {
+            stringBuilder.append(child.toString());
+        }
+        return stringBuilder.toString();
     }
 
     @Override
-    public String toString() {
-        return value;
+    public List<TextComponent> countHowMany() {
+        List<TextComponent> result = new ArrayList<>();
+        List<TextComponent> words = new ArrayList<>();
+        List<TextComponent> marks = new ArrayList<>();
+
+        result.add(this);
+        for (TextComponent child : getChildren()) {
+            if (child instanceof Word) {
+                words.addAll(child.countHowMany());
+            } else if (child instanceof Punctuation) {
+                marks.addAll(child.countHowMany());
+            }
+        }
+
+        result.addAll(words);
+        result.addAll(marks);
+
+        return result;
     }
 }
