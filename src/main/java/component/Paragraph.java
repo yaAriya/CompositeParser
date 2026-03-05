@@ -43,4 +43,3 @@ public class Paragraph extends Composite {
         return result;
     }
 }
-

@@ -11,8 +11,9 @@ public class Main {
         Printer printer = new Printer();
         Text text = new Text();
 
+
         text.buildTextHierarchy(text, reader.readObjectFromConsole());
-        text.printHowMany();
+        printer.printHowMany(text.countHowMany());
         printer.printText(text.toString());
     }
 }
