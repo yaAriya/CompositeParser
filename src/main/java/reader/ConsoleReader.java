@@ -5,18 +5,18 @@ import java.util.Scanner;
 public class ConsoleReader {
     public String readObjectFromConsole() {
         try (Scanner scanner = new Scanner(System.in)) {
-            System.out.println("Enter text for start working. When you finish the text write \"END\"");
-
+            int emptyLineCount = 0;
+            boolean isEnd = false;
             StringBuilder fullText = new StringBuilder();
 
-            while (scanner.hasNext()) {
+            while (scanner.hasNext() && !isEnd) {
                 String line = scanner.nextLine();
-                int endIndex = line.indexOf("END");
 
-                if (endIndex != -1) {
-                    fullText.append(line, 0, endIndex);
-                    fullText.append("\n");
-                    break;
+                if (line.isEmpty()) {
+                    emptyLineCount++;
+                    if (emptyLineCount == 2) {
+                        isEnd = true;
+                    }
                 } else {
                     fullText.append(line);
                     fullText.append("\n");
