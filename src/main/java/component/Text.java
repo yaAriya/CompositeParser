@@ -2,9 +2,6 @@ package component;
 
 import exceptions.ComponentException;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Text extends Composite {
 
     @Override
@@ -25,16 +22,5 @@ public class Text extends Composite {
             stringBuilder.append("\n\n");
         }
         return stringBuilder.toString();
-    }
-
-    @Override
-    public List<TextComponent> countHowMany() {
-        List<TextComponent> result = new ArrayList<>();
-
-        for (TextComponent child : getChildren()) {
-            result.addAll(child.countHowMany());
-        }
-
-        return result;
     }
 }

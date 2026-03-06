@@ -4,7 +4,6 @@ import exceptions.ComponentException;
 import parser.Parser;
 import parser.ParserImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Paragraph extends Composite {
@@ -33,13 +32,7 @@ public class Paragraph extends Composite {
     }
 
     @Override
-    public List<TextComponent> countHowMany() {
-        List<TextComponent> result = new ArrayList<>();
-
-        result.add(this);
-        for (TextComponent sentence : getChildren()) {
-            result.addAll(sentence.countHowMany());
-        }
-        return result;
+    public int calculateParagraphsCount() {
+        return 1;
     }
 }

@@ -11,7 +11,17 @@ public interface TextComponent {
 
     void remove(TextComponent textComponent) throws ComponentException;
 
-    List<TextComponent> countHowMany();
+    int calculateParagraphsCount();
+
+    int calculateSentencesCount();
+
+    int calculateWhiteSpacesCount();
+
+    int calculateWordsCount();
+
+    int calculateLettersCount();
+
+    int calculatePunctuationsCount();
 
     TextComponent getChild(int i) throws ComponentException;
 

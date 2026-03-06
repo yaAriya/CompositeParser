@@ -20,7 +20,30 @@ public abstract class Leaf implements TextComponent {
     }
 
     @Override
-    public abstract List<TextComponent> countHowMany();
+    public int calculateParagraphsCount() {
+        return 0;
+    }
+
+    @Override
+    public int calculateSentencesCount() {
+        return 0;
+    }
+
+    @Override
+    public int calculateWhiteSpacesCount() {
+        return 0;
+    }
+
+    @Override
+    public int calculateWordsCount() {
+        return 0;
+    }
+
+    @Override
+    public abstract int calculateLettersCount();
+
+    @Override
+    public abstract int calculatePunctuationsCount();
 
     @Override
     public TextComponent getChild(int i) throws ComponentException {

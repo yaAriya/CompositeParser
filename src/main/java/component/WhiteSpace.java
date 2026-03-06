@@ -4,7 +4,6 @@ import exceptions.ComponentException;
 import parser.Parser;
 import parser.ParserImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WhiteSpace extends Composite {
@@ -35,23 +34,7 @@ public class WhiteSpace extends Composite {
     }
 
     @Override
-    public List<TextComponent> countHowMany() {
-        List<TextComponent> result = new ArrayList<>();
-        List<TextComponent> words = new ArrayList<>();
-        List<TextComponent> marks = new ArrayList<>();
-
-        result.add(this);
-        for (TextComponent child : getChildren()) {
-            if (child instanceof Word) {
-                words.addAll(child.countHowMany());
-            } else if (child instanceof Punctuation) {
-                marks.addAll(child.countHowMany());
-            }
-        }
-
-        result.addAll(words);
-        result.addAll(marks);
-
-        return result;
+    public int calculateWhiteSpacesCount() {
+        return 1;
     }
 }

@@ -4,7 +4,6 @@ import exceptions.ComponentException;
 import parser.Parser;
 import parser.ParserImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Word extends Composite {
@@ -24,24 +23,16 @@ public class Word extends Composite {
     }
 
     @Override
+    public int calculateWordsCount() {
+        return 1;
+    }
+
+    @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         for (TextComponent child : getChildren()) {
             stringBuilder.append(child.toString());
         }
         return stringBuilder.toString();
-    }
-
-    @Override
-    public List<TextComponent> countHowMany() {
-        List<TextComponent> result = new ArrayList<>();
-
-        result.add(this);
-        for (TextComponent letter : getChildren()) {
-            if (letter instanceof Letter) {
-                result.addAll(letter.countHowMany());
-            }
-        }
-        return result;
     }
 }

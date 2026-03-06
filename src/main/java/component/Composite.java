@@ -22,7 +22,64 @@ public abstract class Composite implements TextComponent {
     }
 
     @Override
-    public abstract List<TextComponent> countHowMany();
+    public int calculateParagraphsCount() {
+        int paragraphsCount = 0;
+
+        for (TextComponent child : getChildren()) {
+            paragraphsCount = paragraphsCount + child.calculateParagraphsCount();
+        }
+        return paragraphsCount;
+    }
+
+    @Override
+    public int calculateSentencesCount() {
+        int sentencesCount = 0;
+
+        for (TextComponent child : getChildren()) {
+            sentencesCount = sentencesCount + child.calculateSentencesCount();
+        }
+        return sentencesCount;
+    }
+
+    @Override
+    public int calculateWhiteSpacesCount() {
+        int whiteSpacesCount = 0;
+
+        for (TextComponent child : getChildren()) {
+            whiteSpacesCount = whiteSpacesCount + child.calculateWhiteSpacesCount();
+        }
+        return whiteSpacesCount;
+    }
+
+    @Override
+    public int calculateWordsCount() {
+        int wordsCount = 0;
+
+        for (TextComponent child : getChildren()) {
+            wordsCount = wordsCount + child.calculateWordsCount();
+        }
+        return wordsCount;
+    }
+
+    @Override
+    public int calculateLettersCount() {
+        int lettersCount = 0;
+
+        for (TextComponent child : getChildren()) {
+            lettersCount = lettersCount + child.calculateLettersCount();
+        }
+        return lettersCount;
+    }
+
+    @Override
+    public int calculatePunctuationsCount() {
+        int punctuationsCount = 0;
+
+        for (TextComponent child : getChildren()) {
+            punctuationsCount = punctuationsCount + child.calculatePunctuationsCount();
+        }
+        return punctuationsCount;
+    }
 
     @Override
     public TextComponent getChild(int i) {

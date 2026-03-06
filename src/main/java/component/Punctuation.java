@@ -4,7 +4,6 @@ import exceptions.ComponentException;
 import parser.Parser;
 import parser.ParserImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Punctuation extends Leaf {
@@ -31,11 +30,13 @@ public class Punctuation extends Leaf {
     }
 
     @Override
-    public List<TextComponent> countHowMany() {
-        List<TextComponent> marks = new ArrayList<>();
+    public int calculateLettersCount() {
+        return 0;
+    }
 
-        marks.add(this);
-        return marks;
+    @Override
+    public int calculatePunctuationsCount() {
+        return 1;
     }
 
     public String getValue() {

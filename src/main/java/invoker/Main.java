@@ -13,7 +13,6 @@ public class Main {
 
 
         text.buildTextHierarchy(text, reader.readObjectFromConsole());
-        printer.printHowMany(text.countHowMany());
         printer.printText(text.toString());
     }
 }

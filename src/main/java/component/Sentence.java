@@ -4,7 +4,6 @@ import exceptions.ComponentException;
 import parser.Parser;
 import parser.ParserImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Sentence extends Composite {
@@ -33,14 +32,7 @@ public class Sentence extends Composite {
     }
 
     @Override
-    public List<TextComponent> countHowMany() {
-        List<TextComponent> result = new ArrayList<>();
-
-        result.add(this);
-        for (TextComponent whiteSpace : getChildren()) {
-            result.addAll(whiteSpace.countHowMany());
-        }
-
-        return result;
+    public int calculateSentencesCount() {
+        return 1;
     }
 }
